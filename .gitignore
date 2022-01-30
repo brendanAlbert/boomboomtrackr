@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+# Local Netlify folder
+.netlify
+*api/
+
+package-lock.json
+tests/
