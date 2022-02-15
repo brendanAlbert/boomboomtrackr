@@ -22,6 +22,11 @@ function calculateTimeSinceLastBoomBoom(a, b) {
     };
 }
 
+function dateToUnixTime(dateString) {
+    return Math.floor(new Date(dateString).getTime() / 1000);
+}
+
 export {
-    calculateTimeSinceLastBoomBoom
+    calculateTimeSinceLastBoomBoom,
+    dateToUnixTime
 }

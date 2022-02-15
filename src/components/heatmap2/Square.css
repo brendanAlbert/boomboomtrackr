@@ -1,0 +1,48 @@
+.popupdate {
+  position: relative;
+}
+
+.popupdate::before {
+  content: attr(boom-date);
+  position: absolute;
+
+  top: 50%;
+  transform: translate(-56px, -45px);
+
+  margin-bottom: 15px;
+
+  pointer-events: none;
+
+  width: 120px;
+  font-size: 14px;
+  padding: 6px 2px;
+  border-radius: 3px;
+  background-color: #000000;
+  color: #aaa;
+  text-align: center;
+
+  z-index: 100;
+
+  opacity: 0;
+  transition: 0.2s opacity;
+}
+
+.popupdate:hover:before,
+.popupdate:hover:after {
+  opacity: 1;
+}
+
+.popupdate::after {
+  content: "";
+  position: absolute;
+
+  pointer-events: none;
+
+  transform: translate(-5px, -10px);
+
+  border: 10px solid #000;
+  border-color: black transparent transparent transparent;
+
+  opacity: 0;
+  transition: 0.2s opacity;
+}

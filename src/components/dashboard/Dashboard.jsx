@@ -9,23 +9,18 @@ import {
 } from "recharts";
 import "./Dashboard.css";
 import { useEffect, useState } from "react";
-import { calculateTimeSinceLastBoomBoom } from '../../utilities/utilities';
+import { calculateTimeSinceLastBoomBoom } from "../../utilities/utilities";
+import HeatMap2 from "../heatmap2/HeatMap2";
 
-export const Dashboard = () => {
+export const Dashboard = ({ bmbmdata }) => {
   const [data, setData] = useState([]);
   const [latest, setLatest] = useState(-1);
   const [earliest, setEarliest] = useState(-1);
   const [mean, setMean] = useState(-1);
   const [timeSince, setTimeSince] = useState(-1);
   const [loaded, setLoaded] = useState(false);
-  const apiurl = import.meta.env.VITE_API_URL;
 
   useEffect(async () => {
-    let result = await fetch(apiurl);
-    let bmbmdata = await result.json();
-    console.log({
-        bmbmdata
-    })
     setData(bmbmdata);
 
     if (bmbmdata.length > 0) {
@@ -43,22 +38,16 @@ export const Dashboard = () => {
         )
       );
 
-
-
-      const { hours }= calculateTimeSinceLastBoomBoom(bmbmdata[bmbmdata.length-2],bmbmdata[bmbmdata.length-1])
-
-      console.log({
-        bmbm1: bmbmdata[bmbmdata.length-2],
-        bmbm2: bmbmdata[bmbmdata.length-1],
-        hours
-      });
-
-      setTimeSince(
-        hours
+      const { hours } = calculateTimeSinceLastBoomBoom(
+        bmbmdata[bmbmdata.length - 2],
+        bmbmdata[bmbmdata.length - 1]
       );
+
+      setTimeSince(hours);
+
+      setLoaded(true);
     }
-    setLoaded(true);
-  }, []);
+  }, [bmbmdata]);
 
   const addColonToTime = (time) => {
     let strtime = "" + time;
@@ -127,7 +116,7 @@ export const Dashboard = () => {
               <p className="card-text">
                 {" "}
                 <span className="badge bg-primary rounded-pill fontsize-24">
-                  { timeSince }
+                  {timeSince}
                 </span>
               </p>
               <h5 className="card-title">⏱ since 💩</h5>
@@ -139,12 +128,24 @@ export const Dashboard = () => {
   );
 
   return (
-    <section className="mt-5 container-fluid d-flex flex-column align-items-center">
+    <section className="mb-5 col-xl-10 col-lg-10 col-md-10 container-fluid d-flex flex-column align-items-center">
       {loaded && (
         <>
           {boomboomstats2}
-          {renderLineChart}
+          <HeatMap2 bmbmdata={bmbmdata} />
+          <div style={{ width: "95vw", marginLeft: "-24px" }}>
+            {renderLineChart}
+          </div>
         </>
+      )}
+      {!loaded && (
+        <div
+          className="spinner-grow"
+          style={{ width: "3rem", height: "3rem" }}
+          role="status"
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
       )}
     </section>
   );

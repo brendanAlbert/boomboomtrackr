@@ -1,0 +1,10 @@
+.loader-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.refresh-spinner {
+  position: absolute;
+  right: -30px;
+}
