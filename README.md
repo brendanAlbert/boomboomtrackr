@@ -46,6 +46,7 @@ N app_base_directory/netlify/functions
 
 `git tag -a v0.1 -m "alpha version of boomboomtrackr pushed to netlify"`
 `git show v0.1`
+`git push --follow-tags`
 
 ## Netlify how to
 
